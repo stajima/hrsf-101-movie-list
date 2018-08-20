@@ -8,7 +8,6 @@ class Nav extends React.Component {
   }
 
   handleChange(event) {
-    // console.log(event.target.value);
     this.setState({ searchValue: event.target.value });
   }
 
@@ -35,7 +34,8 @@ class Nav extends React.Component {
           />
           <button
             className="btn btn-outline-success my-2 my-sm-0"
-            onClick={() => this.props.onSearch(this.state.searchValue)}
+            onClick={() =>
+              this.props.onSearch(undefined, this.state.searchValue)}
           >
             Search
           </button>

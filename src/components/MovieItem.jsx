@@ -5,7 +5,13 @@ const MovieItem = props => (
   >
     <div className="d-flex w-100 justify-content-between">
       <h5 className="mb-1">{props.movie.title}</h5>
-      <small>3 days ago</small>
+      <button
+        type="button"
+        className={props.movie.watched ? 'btn btn-success' : 'btn btn-light'}
+        onClick={() => props.toggleWatched(props.index)}
+      >
+        Watched
+      </button>
     </div>
     <p className="mb-1">
       Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget
