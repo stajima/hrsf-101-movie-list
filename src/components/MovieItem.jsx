@@ -19,6 +19,7 @@ class MovieItem extends React.Component {
           <h5 className="mb-1">{this.props.movie.title}</h5>
         </div>
         <div className={this.state.showDetails ? '' : 'd-none'}>
+          <hr />
           <p className="mb-1">
             <strong>Year:</strong> {this.props.movie.year}
           </p>
