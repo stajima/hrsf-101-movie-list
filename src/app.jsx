@@ -2,8 +2,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      allMovies: this.props.movies,
-      filteredMovies: this.props.movies,
+      allMovies: null,
+      filteredMovies: null,
       search: '',
       tab: 'unwatched'
     };
@@ -12,26 +12,26 @@ class App extends React.Component {
     this.toggleWatched = this.toggleWatched.bind(this);
   }
 
+  getMovies() {
+    window.tmdb.callAPI(movies => {
+      movies.forEach(movie => {
+        movie.watched = false;
+      });
+      this.setState({ allMovies: movies, filteredMovies: movies });
+      this.filterMovies();
+    });
+  }
+
   componentWillMount() {
-    this.filterMovies();
+    this.getMovies();
   }
 
   showMovies() {
     if (this.state.filteredMovies.length > 0) {
-      return this.state.filteredMovies.map((movie, index) => (
-        <MovieItem
-          key={index}
-          movie={movie}
-          toggleWatched={this.toggleWatched}
-          index={index}
-        />
-      ));
+      return this.state.filteredMovies.map((movie, index) => <MovieItem key={index} movie={movie} toggleWatched={this.toggleWatched} index={index} />);
     } else {
       return (
-        <a
-          href="#"
-          className="list-group-item list-group-item-action flex-column align-items-start"
-        >
+        <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
           <div className="d-flex w-100 justify-content-between">
             <h5 className="mb-1">No movies found by that name</h5>
           </div>
@@ -54,10 +54,7 @@ class App extends React.Component {
   filterMovies(tabName = this.state.tab, query = this.state.search) {
     const tab = tabName === 'watched';
     const filteredMovies = this.state.allMovies.filter(
-      ({ title, watched }) =>
-        watched === tab &&
-        (query === '' ||
-          title.toLowerCase().indexOf(query.toLowerCase()) !== -1)
+      ({ title, watched }) => watched === tab && (query === '' || title.toLowerCase().indexOf(query.toLowerCase()) !== -1)
     );
     this.setState({ filteredMovies, tab: tabName });
   }
@@ -72,12 +69,7 @@ class App extends React.Component {
             <ul className="nav nav-tabs">
               <li className="nav-item">
                 <a
-                  className={
-                    'nav-link' +
-                    (this.state.tab === 'unwatched'
-                      ? ' active bg-primary text-white'
-                      : '')
-                  }
+                  className={'nav-link' + (this.state.tab === 'unwatched' ? ' active bg-primary text-white' : '')}
                   onClick={() => this.filterMovies('unwatched')}
                   href="#"
                 >
@@ -86,12 +78,7 @@ class App extends React.Component {
               </li>
               <li className="nav-item">
                 <a
-                  className={
-                    'nav-link' +
-                    (this.state.tab === 'watched'
-                      ? ' active bg-primary text-white'
-                      : '')
-                  }
+                  className={'nav-link' + (this.state.tab === 'watched' ? ' active bg-primary text-white' : '')}
                   onClick={() => this.filterMovies('watched')}
                   href="#"
                 >
@@ -99,7 +86,7 @@ class App extends React.Component {
                 </a>
               </li>
             </ul>
-            <div className="list-group">{this.showMovies()}</div>
+            <div className="list-group">{this.state.allMovies ? this.showMovies() : null}</div>
           </div>
         </div>
       </div>

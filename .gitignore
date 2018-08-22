@@ -5,3 +5,4 @@
 !.vscode/extensions.json
 /compiled
 /node_modules
+/src/config/config.js

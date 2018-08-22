@@ -4,3 +4,6 @@
 #noMovies {
   margin: 20px;
 }
+.poster {
+  max-height: 300px;
+}

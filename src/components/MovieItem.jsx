@@ -21,17 +21,15 @@ class MovieItem extends React.Component {
         <div className={this.state.showDetails ? '' : 'd-none'}>
           <hr />
           <p className="mb-1">
-            <strong>Year:</strong> {this.props.movie.year}
+            <strong>Date:</strong> {this.props.movie.release_date}
           </p>
           <p className="mb-1">
-            <strong>Runtime:</strong> {this.props.movie.runtime}
+            <strong>IMDB Rating:</strong> {this.props.movie.vote_average}
           </p>
           <p className="mb-1">
-            <strong>Metascore:</strong> {this.props.movie.metascore}
+            <strong>Description:</strong> {this.props.movie.overview}
           </p>
-          <p className="mb-1">
-            <strong>IMDB Rating:</strong> {this.props.movie.rating}
-          </p>
+          <img className="poster img-thumbnail float-right" src={window.tmdb.config.imgPath + this.props.movie.poster_path} />
           <button
             type="button"
             className={this.props.movie.watched ? 'btn btn-success' : 'btn btn-light'}
